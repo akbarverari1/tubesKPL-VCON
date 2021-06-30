@@ -1,3 +1,7 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package vcon_final;
 
 import java.awt.Image;
@@ -18,19 +22,24 @@ import javax.swing.JToggleButton;
 import model.ModelMeetings;
 import model.ModelUser;
 
-
+/**
+ *
+ * @author Hp
+ */
 public class CreateMeeting extends javax.swing.JFrame {
 
-    BufferedImage bi;
-    String fn;
-    boolean click;
-    String passCode;
-    ModelUser user;
-    ModelMeetings modelMeeting;
-    PreparedStatement ps;
-    ResultSet rs;
+    BufferedImage BuferedImage;
+    String FormNew;
+    boolean Click;
+    String PassCode;
+    ModelUser User;
+    ModelMeetings ModelMeeting;
+    PreparedStatement PreparedStat;
+    ResultSet ResultSett;
 
-
+    /**
+     * Creates new form WebCamForm
+     */
     public CreateMeeting() {
         initComponents();
         this.panel_info.setVisible(false);
@@ -39,83 +48,89 @@ public class CreateMeeting extends javax.swing.JFrame {
         this.edt_judul_meet.setVisible(false);
     }
 
-    public void initMeeting(ModelUser user, String passCode) {
-        this.passCode = passCode;
-        this.user = user;
-        this.txt_judul_meet.setText(user.getFull_name() + " Meet");
-        this.txt_passcode.setText(passCode);
-        this.txt_host.setText(user.getFull_name());
+    public void InitMeeting(ModelUser User, String PassCode) {
+        this.PassCode = PassCode;
+        this.User = User;
+        this.txt_judul_meet.setText(User.getFullname() + " Meet");
+        this.txt_passcode.setText(PassCode);
+        this.txt_host.setText(User.getFullname());
 
-        String registerUserQuery = "INSERT INTO `meetings`(`judul_meeting`, `nama_host`, `passcode`, `nim`)VALUES(?,?,?,?)";
+        String RegisterUserQuery = "INSERT INTO `meetings`(`judul_meeting`, `nama_host`, `passcode`, `nim`)VALUES(?,?,?,?)";
 
-        String updateQuery = "UPDATE meetings SET passcode = '" + passCode + "' WHERE `nim` =" + user.getNim();
-        updatePassCodeUser(user.getNim(), passCode);
-        getMeeting(user.getNim());
-        if (modelMeeting == null) {
+        String UpdateQuery = "UPDATE meetings SET passcode = '" + PassCode + "' WHERE `nim` =" + User.getNim();
+        UpdatePassCodeUser(User.getNim(), PassCode);
+        GetMeeting(User.getNim());
+        if (ModelMeeting == null) {
             try {
-                ps = DBconnection.getConnection().prepareStatement(registerUserQuery);
-                ps.setString(1, user.getFull_name() + " Meet");
-                ps.setString(2, user.getFull_name());
-                ps.setString(3, passCode);
-                ps.setInt(4, user.getNim());
-                ps.execute();
+                PreparedStat = DBconnection.getConnection().prepareStatement(RegisterUserQuery);
+                PreparedStat.setString(1, User.getFullname() + " Meet");
+                PreparedStat.setString(2, User.getFullname());
+                PreparedStat.setString(3, PassCode);
+                PreparedStat.setInt(4, User.getNim());
+                PreparedStat.execute();
             } catch (SQLException ex) {
                 Logger.getLogger(CreateMeeting.class.getName()).log(Level.SEVERE, null, ex);
+
             }
         } else {
             try {
-                ps = DBconnection.getConnection().prepareStatement(updateQuery);
-                ps.execute();
+                PreparedStat = DBconnection.getConnection().prepareStatement(UpdateQuery);
+                PreparedStat.execute();
             } catch (SQLException ex) {
                 Logger.getLogger(CreateMeeting.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
-    public void getMeeting(int nim) {
-        String query = "SELECT * FROM `meetings` WHERE `nim` = ?";
+    public void GetMeeting(int Nim) {
+        String Query = "SELECT * FROM `meetings` WHERE `nim` = ?";
 
-        PreparedStatement st;
-        ResultSet rs;
+        PreparedStatement PreparedStat;
+        ResultSet ResultSett;
         try {
-            st = DBconnection.getConnection().prepareStatement(query);
-            st.setInt(1, nim);
-            rs = st.executeQuery();
+            PreparedStat = DBconnection.getConnection().prepareStatement(Query);
+            PreparedStat.setInt(1, Nim);
+            ResultSett = PreparedStat.executeQuery();
 
-            if (rs.next()) {
-                modelMeeting = new ModelMeetings();
-                modelMeeting.setId_meet(rs.getInt("id_meeting"));
-                modelMeeting.setNim(rs.getInt("nim"));
-                modelMeeting.setHost(rs.getString("nama_host"));
-                modelMeeting.setJudul(rs.getString("judul_meeting"));
-                modelMeeting.setSchedule(rs.getDate("jadwal"));
-                modelMeeting.setPasscode(rs.getString("passcode"));
+            if (ResultSett.next()) {
+                ModelMeeting = new ModelMeetings();
+                ModelMeeting.setId_meet(ResultSett.getInt("id_meeting"));
+                ModelMeeting.setNim(ResultSett.getInt("nim"));
+                ModelMeeting.setHost(ResultSett.getString("nama_host"));
+                ModelMeeting.setJudul(ResultSett.getString("judul_meeting"));
+                ModelMeeting.setSchedule(ResultSett.getDate("jadwal"));
+                ModelMeeting.setPasscode(ResultSett.getString("passcode"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CreateMeeting.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void joinMeeting(ModelUser user, ModelMeetings model) {
-        modelMeeting = model;
-        this.passCode = model.getPasscode();
-        this.user = user;
-        this.txt_judul_meet.setText(model.getJudul() + " Meet");
-        this.txt_passcode.setText(model.getPasscode());
-        this.txt_host.setText(model.getHost());
-        updatePassCodeUser(user.getNim(), model.getPasscode());
+    public void JoinMeeting(ModelUser User, ModelMeetings Model) {
+        ModelMeeting = Model;
+        this.PassCode = Model.getPasscode();
+        this.User = User;
+        this.txt_judul_meet.setText(Model.getJudul() + " Meet");
+        this.txt_passcode.setText(Model.getPasscode());
+        this.txt_host.setText(Model.getHost());
+        UpdatePassCodeUser(User.getNim(), Model.getPasscode());
     }
 
-    private void updatePassCodeUser(int nim, String passCode) {
-        String updateQuery = "UPDATE users SET pass_code = '" + passCode + "' WHERE `nim` =" + nim;
+    private void UpdatePassCodeUser(int Nim, String PassCode) {
+        String updateQuery = "UPDATE users SET pass_code = '" + PassCode + "' WHERE `nim` =" + Nim;
         try {
-            ps = DBconnection.getConnection().prepareStatement(updateQuery);
-            ps.execute();
+            PreparedStat = DBconnection.getConnection().prepareStatement(updateQuery);
+            PreparedStat.execute();
         } catch (SQLException ex) {
             Logger.getLogger(CreateMeeting.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -325,29 +340,32 @@ public class CreateMeeting extends javax.swing.JFrame {
 
     private void btn_chatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_chatActionPerformed
         RoomChat RoomChat = new RoomChat();
-        RoomChat.initRoomChat(this.user, this.passCode);
+        RoomChat.InitRoomChat(this.User, this.PassCode);
         RoomChat.setVisible(true);
         RoomChat.pack();
         RoomChat.setLocationRelativeTo(null);
+        // TODO add your handling code here:
     }//GEN-LAST:event_btn_chatActionPerformed
 
     private void btn_invit_participantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_invit_participantActionPerformed
         Participant participant = new Participant();
 
-        participant.loadParticipant(modelMeeting.getHost(), this.user, this.passCode);
+        participant.LoadParticipant(ModelMeeting.getHost(), this.User, this.PassCode);
         participant.setVisible(true);
         participant.pack();
         participant.setLocationRelativeTo(null);
+        // TODO add your handling code here:
     }//GEN-LAST:event_btn_invit_participantActionPerformed
 
     private void btn_info1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_info1MouseClicked
-        if (!click) {
-            click = true;
+        if (!Click) {
+            Click = true;
             this.panel_info.setVisible(true);
         } else {
-            click = false;
+            Click = false;
             this.panel_info.setVisible(false);
         }
+        // TODO add your handling code here:
     }//GEN-LAST:event_btn_info1MouseClicked
 
     private void edt_judul_meetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edt_judul_meetKeyPressed
@@ -359,34 +377,40 @@ public class CreateMeeting extends javax.swing.JFrame {
         this.edt_judul_meet.setVisible(true);
         this.txt_judul_meet.setVisible(false);
         this.btn_edit.setVisible(false);
+        // TODO add your handling code here:
     }//GEN-LAST:event_btn_editMouseClicked
 
     private void edt_judul_meetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edt_judul_meetActionPerformed
-
-        String judul_meet = edt_judul_meet.getText().toString();
-        this.txt_judul_meet.setText(judul_meet);
+        // TODO add your handling code here:
+        String JudulMeet = edt_judul_meet.getText().toString();
+        this.txt_judul_meet.setText(JudulMeet);
         this.edt_judul_meet.setVisible(false);
         this.txt_judul_meet.setVisible(true);
         this.btn_edit.setVisible(true);
-        String updateQuery = "UPDATE meetings SET judul_meeting = '" + judul_meet + "' WHERE `nim` =" + user.getNim();
+        String UpdateQuery = "UPDATE meetings SET judul_meeting = '" + JudulMeet + "' WHERE `nim` =" + User.getNim();
         try {
-            ps = DBconnection.getConnection().prepareStatement(updateQuery);
-            ps.execute();
+            PreparedStat = DBconnection.getConnection().prepareStatement(UpdateQuery);
+            PreparedStat.execute();
         } catch (SQLException ex) {
             Logger.getLogger(CreateMeeting.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_edt_judul_meetActionPerformed
 
     private void btn_endmeetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_endmeetsActionPerformed
-
+        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btn_endmeetsActionPerformed
 
-
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         CreateMeeting form = new CreateMeeting();
         form.setVisible(true);
-       
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Metal".equals(info.getName())) {
@@ -403,6 +427,35 @@ public class CreateMeeting extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(CreateMeeting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
+        /* Create and display the form 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new WebCamForm().setVisible(true);
+            }
+        //</editor-fold>
+
+        /* Create and display the form 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new WebCamForm().setVisible(true);
+            }
+        //</editor-fold>
+
+        /* Create and display the form 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new WebCamForm().setVisible(true);
+            }
+        //</editor-fold>
+
+        /* Create and display the form 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new WebCamForm().setVisible(true);
+            }
+        });*/
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_chat;
