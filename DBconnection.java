@@ -6,33 +6,36 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
+/**
+ *
+ * @author User
+ */
 public class DBconnection {
     
-    private static String servername = "localhost";
-    private static String username = "root";
-    private static String dbname = "user_db";
-    private static Integer portnumber = 3306;
-    private static String password = "";
+    private static String Servername = "localhost";
+    private static String Username = "root";
+    private static String DBname = "user_db";
+    private static Integer Portnumber = 3306;
+    private static String Password = "";
     
     public static Connection getConnection()
     {
-        Connection connect = null;
+        Connection Connect = null;
         
-        MysqlDataSource datasource = new MysqlDataSource();
+        MysqlDataSource DataSource = new MysqlDataSource();
         
-        datasource.setServerName(servername);
-        datasource.setUser(username);
-        datasource.setPassword(password);
-        datasource.setDatabaseName(dbname);
-        datasource.setPortNumber(portnumber);
+        DataSource.setServerName(Servername);
+        DataSource.setUser(Username);
+        DataSource.setPassword(Password);
+        DataSource.setDatabaseName(DBname);
+        DataSource.setPortNumber(Portnumber);
         
         try {
-            connect = datasource.getConnection();
+            Connect = DataSource.getConnection();
         } catch (SQLException ex) {
             Logger.getLogger("get connection -> " + DBconnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return connect;
+        
+        return Connect;
     }
 }

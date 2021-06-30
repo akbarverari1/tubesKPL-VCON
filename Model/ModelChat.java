@@ -13,41 +13,41 @@ import java.sql.Date;
  */
 public class ModelChat {
 
-    int id_chat;
-    String message;
-    Date date;
-    String passCode;
+    int IdChat;
+    String Message;
+    Date Date;
+    String PassCode;
 
-    public int getId_chat() {
-        return id_chat;
+    public int getIdChat() {
+        return IdChat;
     }
 
-    public void setId_chat(int id_chat) {
-        this.id_chat = id_chat;
+    public void setId_chat(int IdChat) {
+        this.IdChat = IdChat;
     }
 
     public String getMessage() {
-        return message;
+        return Message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessage(String Message) {
+        this.Message = Message;
     }
 
     public Date getDate() {
-        return date;
+        return Date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(Date Date) {
+        this.Date = Date;
     }
 
     public String getPassCode() {
-        return passCode;
+        return PassCode;
     }
 
-    public void setPassCode(String passCode) {
-        this.passCode = passCode;
+    public void setPassCode(String PassCode) {
+        this.PassCode = PassCode;
     }
     
     

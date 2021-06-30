@@ -16,59 +16,59 @@ import java.util.logging.Handler;
  */
 public class ModelMeetings {
 
-    int id_meet;
-    String judul;
-    String host;
-    String passcode;
-    Date schedule;
-    int nim;
+    int IdMeet;
+    String Judul;
+    String Host;
+    String Passcode;
+    Date Schedule;
+    int Nim;
 
     public int getId_meet() {
-        return id_meet;
+        return IdMeet;
     }
 
-    public void setId_meet(int id_meet) {
-        this.id_meet = id_meet;
+    public void setId_meet(int IdMeet) {
+        this.IdMeet = IdMeet;
     }
 
     public Date getSchedule() {
-        return schedule;
+        return Schedule;
     }
 
-    public void setSchedule(Date schedule) {
-        this.schedule = schedule;
+    public void setSchedule(Date Schedule) {
+        this.Schedule = Schedule;
     }
 
     public String getJudul() {
-        return judul;
+        return Judul;
     }
 
-    public void setJudul(String judul) {
-        this.judul = judul;
+    public void setJudul(String Judul) {
+        this.Judul = Judul;
     }
 
     public String getHost() {
-        return host;
+        return Host;
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    public void setHost(String Host) {
+        this.Host = Host;
     }
 
     public String getPasscode() {
-        return passcode;
+        return Passcode;
     }
 
-    public void setPasscode(String passcode) {
-        this.passcode = passcode;
+    public void setPasscode(String Passcode) {
+        this.Passcode = Passcode;
     }
 
     public int getNim() {
-        return nim;
+        return Nim;
     }
 
-    public void setNim(int nim) {
-        this.nim = nim;
+    public void setNim(int Nim) {
+        this.Nim = Nim;
     }
 
 }

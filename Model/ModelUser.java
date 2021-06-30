@@ -10,52 +10,49 @@ package model;
  * @author User
  */
 public class ModelUser {
-    int nim;
-    String full_name;
-    String username;
-    String phone;
-    String gender;
+    int Nim;
+    String Fullname;
+    String Username;
+    String Phone;
+    String Gender;
     
     public int getNim() {
-        return nim;
+        return Nim;
     }
 
-    public void setNim(int nim) {
-        this.nim = nim;
+    public void setNim(int Nim) {
+        this.Nim = Nim;
     }
 
-    public String getFull_name() {
-        return full_name;
+    public String getFullname() {
+        return Fullname;
     }
 
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setFull_name(String Fullname) {
+        this.Fullname = Fullname;
     }
 
     public String getUsername() {
-        return username;
+        return Fullname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String Username) {
+        this.Username = Username;
     }
 
     public String getPhone() {
-        return phone;
+        return Phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhone(String Phone) {
+        this.Phone = Phone;
     }
 
     public String getGender() {
-        return gender;
+        return Gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-    
-    
-    
+    public void setGender(String Gender) {
+        this.Gender = Gender;
+    }  
 }
